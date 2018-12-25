@@ -51,10 +51,6 @@ class MyHomePage extends StatelessWidget {
     Navigator.of(context)
         .push(MaterialPageRoute(
                 builder: (BuildContext context) {
-//                  return BlocProvider<ExerciseTypeCatalogBloc>(
-//                    bloc: ExerciseTypeCatalogBloc(),
-//                    child: UserDefinedExerciseTypesPage(),
-//                  );
                   return UserDefinedExerciseTypesPage();
                 }
         )

@@ -39,21 +39,20 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return BlocProvider<ExerciseTypeCatalogBloc>(
-                    bloc: _bloc,
-                    child: NewExerciseTypePage(),
-                  );
-                }
-            )
-            );
-          },
+          onPressed: () => _openNewExerciseTypePage(context),
           child: Icon(Icons.add),
       ),
 
+    );
+  }
+
+  void _openNewExerciseTypePage(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+          builder: (BuildContext context) {
+            return  NewExerciseTypePage();
+          }
+        )
     );
   }
 
