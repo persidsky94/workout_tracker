@@ -84,6 +84,11 @@ class ExerciseTypeDatabaseHelper {
     return await dbInstance.delete(tableExerciseTypes, where: '$columnId = ?', whereArgs: [id]);
   }
 
+  Future<int> deleteAll() async {
+    var dbInstance = await db;
+    return await dbInstance.delete(tableExerciseTypes, where: '1');
+  }
+
   Future<int> update(ExerciseType exerciseType) async {
     var dbInstance = await db;
     return await dbInstance.update(tableExerciseTypes, exerciseType.toMap(),

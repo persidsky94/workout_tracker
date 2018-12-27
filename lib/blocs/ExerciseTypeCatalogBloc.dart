@@ -15,6 +15,10 @@ class ExerciseTypeCatalogBloc extends BlocBase {
   get in_addExerciseType => _addExerciseType.sink;
   get _out_addExerciseType => _addExerciseType.stream;
 
+  BehaviorSubject<void> _removeAllExerciseTypes = new BehaviorSubject();
+  get in_removeAllExerciseTypes => _removeAllExerciseTypes.sink;
+  get _out_removeAllExerciseTypes => _removeAllExerciseTypes.stream;
+
 //  BehaviorSubject<ExerciseType> _editExerciseType = new BehaviorSubject();
 //  get in_editExersizeType => _editExerciseType.sink;
 //  get _out_editExerciseType => _editExerciseType.stream;
@@ -22,6 +26,7 @@ class ExerciseTypeCatalogBloc extends BlocBase {
 
   ExerciseTypeCatalogBloc() {
     _addExerciseType.listen(_handle_addExerciseType);
+    _removeAllExerciseTypes.listen((void _) => _handle_removeAllExerciseTypes());
     //_editExerciseType.listen(_handle_editExerciseType);
 
     _updateExerciseTypesList();
@@ -31,11 +36,18 @@ class ExerciseTypeCatalogBloc extends BlocBase {
   void dispose() {
     _exerciseTypes.close();
     _addExerciseType.close();
+    _removeAllExerciseTypes.close();
   }
 
   void _handle_addExerciseType(ExerciseType exerciseType) {
     _insertToDB(exerciseType).then((_) {
         _updateExerciseTypesList();
+    });
+  }
+
+  void _handle_removeAllExerciseTypes() {
+    ExerciseTypeDatabaseHelper.instance.deleteAll().then((_) {
+      _updateExerciseTypesList();
     });
   }
 
