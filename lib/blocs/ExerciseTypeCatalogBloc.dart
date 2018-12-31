@@ -13,21 +13,14 @@ class ExerciseTypeCatalogBloc extends BlocBase {
 
   BehaviorSubject<ExerciseType> _addExerciseType = new BehaviorSubject();
   get in_addExerciseType => _addExerciseType.sink;
-  get _out_addExerciseType => _addExerciseType.stream;
 
   BehaviorSubject<void> _removeAllExerciseTypes = new BehaviorSubject();
   get in_removeAllExerciseTypes => _removeAllExerciseTypes.sink;
-  get _out_removeAllExerciseTypes => _removeAllExerciseTypes.stream;
-
-//  BehaviorSubject<ExerciseType> _editExerciseType = new BehaviorSubject();
-//  get in_editExersizeType => _editExerciseType.sink;
-//  get _out_editExerciseType => _editExerciseType.stream;
 
 
   ExerciseTypeCatalogBloc() {
     _addExerciseType.listen(_handle_addExerciseType);
     _removeAllExerciseTypes.listen((void _) => _handle_removeAllExerciseTypes());
-    //_editExerciseType.listen(_handle_editExerciseType);
 
     _updateExerciseTypesList();
   }
@@ -51,8 +44,6 @@ class ExerciseTypeCatalogBloc extends BlocBase {
     });
   }
 
-  //void _handle_editExerciseType(ExerciseType editedExerciseType)
-
   Future<ExerciseType> _insertToDB(ExerciseType exerciseType) {
     return ExerciseTypeDatabaseHelper.instance.insert(exerciseType);
   }
@@ -67,7 +58,4 @@ class ExerciseTypeCatalogBloc extends BlocBase {
     return ExerciseTypeDatabaseHelper.instance.getAllEntities();
   }
 
-//  void _handle_editExerciseType(ExerciseType exerciseType) {
-//
-//  }
 }

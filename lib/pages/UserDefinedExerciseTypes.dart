@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../blocs/BlocProvider.dart';
 import '../blocs/ExerciseTypeCatalogBloc.dart';
-import '../dataLayer/ExerciseType.dart';
 import '../pages/NewExerciseType.dart';
+import '../widgets/ExerciseTypeCardList.dart';
 
 
 class UserDefinedExerciseTypesPage extends StatelessWidget {
@@ -18,29 +18,7 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Exercise types"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: StreamBuilder<List<ExerciseType>>(
-                stream: _bloc.out_exerciseTypes,
-                builder: (BuildContext context, AsyncSnapshot<List<ExerciseType>> list) {
-                  return ListView.separated(
-                    separatorBuilder: (context, index) => Divider(
-                      color: Colors.grey,
-                    ),
-                    itemCount: list.data == null ? 0 : list.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                        return _buildExerciseTypeCard(context, list.data[index]);
-                    },
-                  );
-                },
-              )
-            )
-          ],
-        ),
-      ),
+      body: ExerciseTypeCardList(_bloc.out_exerciseTypes),
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -48,12 +26,12 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
           FloatingActionButton(
             heroTag: null,
             onPressed: () => _openNewExerciseTypePage(context),
-            child: Icon(Icons.add),
+            child: Icon(Icons.add, color: Colors.white,),
           ),
           FloatingActionButton(
             heroTag: null,
             onPressed: () => _removeAllExerciseTypes(_bloc),
-            child: Icon(Icons.delete,color: Colors.white,),
+            child: Icon(Icons.delete, color: Colors.white,),
           ),
         ],
       ),
@@ -73,50 +51,5 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
           }
         )
     );
-  }
-
-
-  Widget _buildExerciseTypeCard(BuildContext context, ExerciseType exerciseType) {
-    var name = exerciseType.name;
-    Widget _name = Text("Exercise: $name");
-
-    List<Widget> _stats = [];
-    if (exerciseType.hasWeight)
-      _stats.add(Icon(Icons.fitness_center, color: Colors.blue));
-    if (exerciseType.hasDuration)
-      _stats.add(Icon(Icons.access_time, color: Colors.blue));
-    if (exerciseType.hasTimes)
-      _stats.add(Icon(Icons.repeat, color: Colors.blue));
-    if (exerciseType.hasRepetitions)
-      _stats.add(Icon(Icons.loop, color: Colors.blue));
-
-//    var _statsRow = Row(
-//      mainAxisAlignment: MainAxisAlignment.end,
-//      children: _stats,
-//    );
-
-    return ListTile(
-      //title: _name,
-      //subtitle: _statsRow,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(child: Row(
-            //crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: _name,
-              ),
-            ],
-          )),
-          Row(
-            //crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: _stats,
-          ),
-        ],
-      )
-    );
-
   }
 }
