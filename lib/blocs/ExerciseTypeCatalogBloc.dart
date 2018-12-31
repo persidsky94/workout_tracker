@@ -64,7 +64,7 @@ class ExerciseTypeCatalogBloc extends BlocBase {
   }
 
   Future<List<ExerciseType>> _getAllExerciseTypesFromDB() {
-    return ExerciseTypeDatabaseHelper.instance.getAllExerciseTypes();
+    return ExerciseTypeDatabaseHelper.instance.getAllEntities();
   }
 
 //  void _handle_editExerciseType(ExerciseType exerciseType) {

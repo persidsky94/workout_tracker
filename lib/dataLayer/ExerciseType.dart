@@ -1,11 +1,12 @@
 
-final String tableExerciseTypes = 'exerciseTypes';
-final String columnId           = '_id';
-final String columnName         = 'exerciseName';
-final String columnWeight       = 'exerciseWeight';
-final String columnDuration     = 'exerciseDuration';
-final String columnRepetitions  = 'exerciseRepetition';
-final String columnTimes        = 'exerciseTimes';
+final String exerciseTypesTableName = 'exerciseTypes';
+final String columnId               = '_id';
+final String columnName             = 'exerciseName';
+final String columnWeight           = 'exerciseWeight';
+final String columnDuration         = 'exerciseDuration';
+final String columnRepetitions      = 'exerciseRepetition';
+final String columnTimes            = 'exerciseTimes';
+final List<String> exerciseColumns  = [columnId, columnName, columnWeight, columnDuration, columnRepetitions, columnTimes];
 
 class ExerciseType {
   int id;

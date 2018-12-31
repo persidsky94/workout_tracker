@@ -1,43 +1,41 @@
-import 'dart:async';
 
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'SimpleEntityDatabaseHelper.dart';
 import '../dataLayer/ExerciseType.dart';
 
 
-class ExerciseTypeDatabaseHelper {
-  static final ExerciseTypeDatabaseHelper instance = new ExerciseTypeDatabaseHelper._internal();
+class ExerciseTypeDatabaseHelper extends SimpleEntityDatabaseHelper<ExerciseType> {
+  static final ExerciseTypeDatabaseHelper instance = new ExerciseTypeDatabaseHelper._internal(exerciseTypesTableName, columnId, exerciseColumns);
   factory ExerciseTypeDatabaseHelper() => instance;
 
-  ExerciseTypeDatabaseHelper._internal();
-
-  static Database _db;
-
-  Future<Database> get db async {
-    if (_db != null)
-      return _db;
-    else
-      await _initDb();
-
-    return _db;
+  ExerciseTypeDatabaseHelper._internal(String tableName, String columnId, List<String> columns) {
+    this.tableName = tableName;
+    this.columnId = columnId;
+    this. columns = columns;
   }
 
-  Future _initDb() async {
-    String myDbPath = await _getDbPath();
-    _db = await openDatabase(myDbPath, version: 1, onCreate: _onCreate);
+  ExerciseType entityFromMap(Map m) {
+    return ExerciseType.fromMap(m);
   }
 
-  Future<String> _getDbPath() async {
-    String allDbPath = await getDatabasesPath();
-    String myDbPath = join(allDbPath, 'exercise_types.db');
-    return myDbPath;
+  Map<String, dynamic> entityToMap(ExerciseType entity) {
+    return entity.toMap();
   }
 
-  void _onCreate(Database database, int version) async {
+  int getEntityId(ExerciseType entity) {
+    return entity.id;
+  }
+
+  ExerciseType mutateEntityId(ExerciseType entity, int newId) {
+    entity.id = newId;
+    return entity;
+  }
+
+  void onCreate(Database database, int version) async {
     await database.execute(
         '''
-      create table $tableExerciseTypes (
+      create table $exerciseTypesTableName (
         $columnId integer primary key autoincrement,
         $columnName text not null,
         $columnWeight integer not null,
@@ -48,55 +46,4 @@ class ExerciseTypeDatabaseHelper {
     );
   }
 
-  Future<ExerciseType> insert(ExerciseType exerciseType) async {
-    var dbInstance = await db;
-    exerciseType.id = await dbInstance.insert(tableExerciseTypes, exerciseType.toMap());
-    return exerciseType;
-  }
-
-  Future<List<ExerciseType>> getAllExerciseTypes() async {
-    var dbInstance = await db;
-    List<Map> maps = await dbInstance.query(tableExerciseTypes,
-        columns: [columnId, columnName, columnWeight, columnDuration, columnRepetitions, columnTimes]);
-    if (maps.length > 0) {
-      List<ExerciseType> exTypes = maps.map((et) {
-        return ExerciseType.fromMap(et);
-      }).toList();
-      return Future.value(exTypes);
-    }
-    return Future.value(List<ExerciseType>());
-  }
-
-  Future<ExerciseType> getExerciseType(int id) async {
-    var dbInstance = await db;
-    List<Map> maps = await dbInstance.query(tableExerciseTypes,
-        columns: [columnId, columnName, columnWeight, columnDuration, columnRepetitions, columnTimes],
-        where: '$columnId = ?',
-        whereArgs: [id]);
-    if (maps.length > 0) {
-      return ExerciseType.fromMap(maps.first);
-    }
-    return null;
-  }
-
-  Future<int> delete(int id) async {
-    var dbInstance = await db;
-    return await dbInstance.delete(tableExerciseTypes, where: '$columnId = ?', whereArgs: [id]);
-  }
-
-  Future<int> deleteAll() async {
-    var dbInstance = await db;
-    return await dbInstance.delete(tableExerciseTypes, where: '1');
-  }
-
-  Future<int> update(ExerciseType exerciseType) async {
-    var dbInstance = await db;
-    return await dbInstance.update(tableExerciseTypes, exerciseType.toMap(),
-        where: '$columnId = ?', whereArgs: [exerciseType.id]);
-  }
-
-  Future close() async {
-    var dbInstance = await db;
-    dbInstance.close();
-  }
 }
