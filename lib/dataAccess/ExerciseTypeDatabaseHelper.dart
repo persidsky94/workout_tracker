@@ -9,6 +9,7 @@ class ExerciseTypeDatabaseHelper extends SimpleEntityDatabaseHelper<ExerciseType
   static final ExerciseTypeDatabaseHelper instance = new ExerciseTypeDatabaseHelper._internal(exerciseTypesTableName, columnId, exerciseColumns);
   factory ExerciseTypeDatabaseHelper() => instance;
 
+
   ExerciseTypeDatabaseHelper._internal(String tableName, String columnId, List<String> columns) {
     this.tableName = tableName;
     this.columnId = columnId;

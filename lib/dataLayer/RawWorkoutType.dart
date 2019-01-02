@@ -6,7 +6,7 @@ final String columnExerciseTypeIds  = 'exerciseIds';
 final List<String> workoutColumns = [columnId, columnName, columnExerciseTypeIds];
 
 
-class WorkoutType {
+class RawWorkoutType {
   int id;
   String name;
   List<int> exerciseTypeIds;
@@ -32,11 +32,19 @@ class WorkoutType {
     return res;
   }
 
-  WorkoutType();
+  List<int> _commaSeparatedStringToIds(String commaSeparatedIds) {
+    List<String> listIds = commaSeparatedIds.split(',');
+    listIds.remove('');
+    if (listIds.length == 0)
+      return List<int>();
+    return listIds.map((stringId) => int.parse(stringId)).toList();
+  }
 
-  WorkoutType.fromMap(Map<String, dynamic> map) {
+  RawWorkoutType();
+
+  RawWorkoutType.fromMap(Map<String, dynamic> map) {
     id = map[columnId];
     name = map[columnName];
-    exerciseTypeIds = map[columnExerciseTypeIds];
+    exerciseTypeIds = _commaSeparatedStringToIds(map[columnExerciseTypeIds]);
   }
 }

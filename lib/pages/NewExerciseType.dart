@@ -94,7 +94,7 @@ class ExerciseTypeFormState extends State<ExerciseTypeForm> {
   void _submit(BuildContext context, ExerciseTypeCatalogBloc bloc) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      bloc.in_addExerciseType.add(ExerciseType.fromMap(_exerciseTypeMap));
+      bloc.in_addRawEntity.add(ExerciseType.fromMap(_exerciseTypeMap));
       Navigator.pop(context);
     }
   }

@@ -18,7 +18,7 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Exercise types"),
       ),
-      body: ExerciseTypeCardList(_bloc.out_exerciseTypes),
+      body: ExerciseTypeCardList(_bloc.out_rawEntitiesList),
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -40,7 +40,7 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
 
   void _removeAllExerciseTypes(ExerciseTypeCatalogBloc bloc) {
     void a;
-    bloc.in_removeAllExerciseTypes.add(a);
+    bloc.in_removeAllRawEntities.add(a);
   }
 
   void _openNewExerciseTypePage(BuildContext context) {

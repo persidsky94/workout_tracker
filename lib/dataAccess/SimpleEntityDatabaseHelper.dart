@@ -32,6 +32,7 @@ abstract class SimpleEntityDatabaseHelper<Entity> {
   void onCreate(Database database, int version) ;
 
 
+
   Database _db;
   Future<Database> get db async {
     if (_db != null)
