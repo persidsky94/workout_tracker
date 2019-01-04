@@ -38,7 +38,7 @@ class RawWorkoutTypeDatabaseHelper extends SimpleEntityDatabaseHelper<RawWorkout
       create table $workoutTypesTableName (
         $columnId integer primary key autoincrement,
         $columnName text not null,
-        $columnExerciseTypeIds text not null
+        $columnExerciseTypeIds text not null)
       '''
     );
   }

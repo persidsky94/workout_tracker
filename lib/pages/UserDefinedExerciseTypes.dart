@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../blocs/BlocProvider.dart';
 import '../blocs/ExerciseTypeCatalogBloc.dart';
 import '../pages/NewExerciseType.dart';
-import '../widgets/ExerciseTypeCardList.dart';
+import '../widgets/ExerciseTypeCardListFromStream.dart';
 
 
 class UserDefinedExerciseTypesPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Exercise types"),
       ),
-      body: ExerciseTypeCardList(_bloc.out_rawEntitiesList),
+      body: ExerciseTypeCardListFromStream(_bloc.out_rawEntitiesList),
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,

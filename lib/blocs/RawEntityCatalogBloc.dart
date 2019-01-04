@@ -30,9 +30,9 @@ abstract class RawEntityCatalogBloc<RawEntity, RawEntityDatabaseHelper extends S
 
   @override
   void dispose() {
-    _rawEntitiesList.close();
     _addRawEntity.close();
     _removeAllRawEntities.close();
+    _rawEntitiesList.close();
   }
 
   void _handle_addRawEntity(RawEntity rawEntity) {

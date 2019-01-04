@@ -6,35 +6,34 @@ import 'ExerciseTypeCard.dart';
 
 
 class ExerciseTypeCardList extends StatelessWidget {
-  final Stream<List<ExerciseType>> _exerciseTypesListStream;
+  final List<ExerciseType> _exerciseTypesList;
 
-  const ExerciseTypeCardList(this._exerciseTypesListStream);
+  const ExerciseTypeCardList(this._exerciseTypesList);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Expanded(
-              child: StreamBuilder<List<ExerciseType>>(
-                stream: _exerciseTypesListStream,
-                builder: (BuildContext context, AsyncSnapshot<List<ExerciseType>> list) {
-                  return ListView.separated(
-                    separatorBuilder: (context, index) => Divider(
-                      color: Colors.grey,
-                    ),
-                    itemCount: list.data == null ? 0 : list.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ExerciseTypeCard(list.data[index]);
-                    },
-                  );
-                },
-              )
-          )
+//          Expanded(
+//            fit: FlexFit.loose,
+//            child: ListView.separated(
+            ListView.separated(
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              separatorBuilder: (context, index) => Divider(
+                color: Colors.grey,
+              ),
+              itemCount: _exerciseTypesList == null ? 0 : _exerciseTypesList.length,
+              itemBuilder: (context, index) {
+                return ExerciseTypeCard(_exerciseTypesList[index]);
+              },
+            ),
+//          )
         ],
       ),
     );
   }
-
 }

@@ -34,17 +34,15 @@ class ExerciseTypeDatabaseHelper extends SimpleEntityDatabaseHelper<ExerciseType
   }
 
   void onCreate(Database database, int version) async {
-    await database.execute(
-        '''
-      create table $exerciseTypesTableName (
-        $columnId integer primary key autoincrement,
-        $columnName text not null,
-        $columnWeight integer not null,
-        $columnDuration integer not null,
-        $columnRepetitions integer not null,
-        $columnTimes integer not null)
-      '''
-    );
+    await database.execute('''
+create table $exerciseTypesTableName (
+  $columnId integer primary key autoincrement,
+  $columnName text not null,
+  $columnWeight integer not null,
+  $columnDuration integer not null,
+  $columnRepetitions integer not null,
+  $columnTimes integer not null)
+''');
   }
 
 }

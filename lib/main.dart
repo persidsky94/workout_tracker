@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'blocs/BlocProvider.dart';
 import 'blocs/ExerciseTypeCatalogBloc.dart';
+import 'blocs/RawWorkoutTypeCatalogBloc.dart';
+import 'blocs/WorkoutTypeCatalogBloc.dart';
 import 'pages/UserDefinedExerciseTypes.dart';
+import 'pages/UserDefinedWorkoutTypes.dart';
 
 
 void main() => runApp(MyApp());
@@ -10,15 +13,25 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ExerciseTypeCatalogBloc exerciseTypeCatalogBloc = ExerciseTypeCatalogBloc();
+    RawWorkoutTypeCatalogBloc rawWorkoutTypeCatalogBloc = RawWorkoutTypeCatalogBloc();
+    WorkoutTypeCatalogBloc workoutTypeCatalogBloc = WorkoutTypeCatalogBloc(exerciseTypeCatalogBloc, rawWorkoutTypeCatalogBloc);
+
     return BlocProvider<ExerciseTypeCatalogBloc>(
-      bloc: ExerciseTypeCatalogBloc(),
-      child: MaterialApp(
-        title: 'Workout tracker',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      bloc: exerciseTypeCatalogBloc,
+      child: BlocProvider<RawWorkoutTypeCatalogBloc>(
+        bloc: rawWorkoutTypeCatalogBloc,
+        child: BlocProvider<WorkoutTypeCatalogBloc>(
+          bloc: workoutTypeCatalogBloc,
+          child: MaterialApp(
+            title: 'Workout tracker',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: MyHomePage('Workout tracker'),
+          ),
         ),
-        home: MyHomePage('Workout tracker'),
-      ),
+      )
     );
   }
 }
@@ -41,6 +54,10 @@ class MyHomePage extends StatelessWidget {
               onPressed: () => _openExerciseTypesPage(context),
               child: Text("Exercise types list"),
             ),
+            RaisedButton(
+              onPressed: () => _openWorkoutTypesPage(context),
+              child: Text("Workout types list"),
+            ),
           ],
         ),
       ),
@@ -54,6 +71,16 @@ class MyHomePage extends StatelessWidget {
                   return UserDefinedExerciseTypesPage();
                 }
         )
+    );
+  }
+
+  void _openWorkoutTypesPage(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+        builder: (BuildContext context) {
+          return UserDefinedWorkoutTypesPage();
+        }
+    )
     );
   }
 }
