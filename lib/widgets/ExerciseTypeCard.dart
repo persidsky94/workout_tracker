@@ -5,8 +5,16 @@ import '../dataLayer/ExerciseType.dart';
 
 class ExerciseTypeCard extends StatelessWidget {
   final ExerciseType _exerciseType;
+  final bool isSelected;
+  final Function onTapCallback;
 
-  const ExerciseTypeCard(this._exerciseType);
+  const ExerciseTypeCard(
+    this._exerciseType,
+    {
+    this.isSelected = false,
+    this.onTapCallback = null,
+    }
+  );
 
 
   Widget build(BuildContext context) {
@@ -23,7 +31,13 @@ class ExerciseTypeCard extends StatelessWidget {
     if (_exerciseType.hasRepetitions)
       _stats.add(Icon(Icons.loop, color: Colors.blue));
 
+
     return ListTile(
+        selected: isSelected,
+        onTap: () {
+          if (onTapCallback != null)
+            Function.apply(onTapCallback, [_exerciseType]);
+        },
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

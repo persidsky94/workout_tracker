@@ -12,13 +12,13 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ExerciseTypeCatalogBloc _bloc = BlocProvider.of<ExerciseTypeCatalogBloc>(context);
+    ExerciseTypeCatalogBloc _exerciseTypeCatalogBloc = BlocProvider.of<ExerciseTypeCatalogBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Exercise types"),
       ),
-      body: ExerciseTypeCardListFromStream(_bloc.out_rawEntitiesList),
+      body: ExerciseTypeCardListFromStream(_exerciseTypeCatalogBloc.out_rawEntitiesList),
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -30,7 +30,7 @@ class UserDefinedExerciseTypesPage extends StatelessWidget {
           ),
           FloatingActionButton(
             heroTag: null,
-            onPressed: () => _removeAllExerciseTypes(_bloc),
+            onPressed: () => _removeAllExerciseTypes(_exerciseTypeCatalogBloc),
             child: Icon(Icons.delete, color: Colors.white,),
           ),
         ],

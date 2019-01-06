@@ -4,7 +4,7 @@ import 'RawWorkoutType.dart';
 class WorkoutType {
   int id;
   String name;
-  List<ExerciseType> exerciseTypes;
+  List<ExerciseType> exerciseTypes = List();
 
   RawWorkoutType toRaw() {
     RawWorkoutType rawWorkoutType = RawWorkoutType();
