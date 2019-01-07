@@ -4,6 +4,8 @@ import 'blocs/BlocProvider.dart';
 import 'blocs/ExerciseTypeCatalogBloc.dart';
 import 'blocs/RawWorkoutTypeCatalogBloc.dart';
 import 'blocs/WorkoutTypeCatalogBloc.dart';
+import 'blocs/WorkoutInstanceCatalogBloc.dart';
+import 'blocs/RawWorkoutInstanceCatalogBloc.dart';
 import 'pages/UserDefinedExerciseTypes.dart';
 import 'pages/UserDefinedWorkoutTypes.dart';
 
@@ -16,6 +18,13 @@ class MyApp extends StatelessWidget {
     ExerciseTypeCatalogBloc exerciseTypeCatalogBloc = ExerciseTypeCatalogBloc();
     RawWorkoutTypeCatalogBloc rawWorkoutTypeCatalogBloc = RawWorkoutTypeCatalogBloc();
     WorkoutTypeCatalogBloc workoutTypeCatalogBloc = WorkoutTypeCatalogBloc(exerciseTypeCatalogBloc, rawWorkoutTypeCatalogBloc);
+    RawWorkoutInstanceCatalogBloc rawWorkoutInstanceCatalogBloc = RawWorkoutInstanceCatalogBloc();
+    WorkoutInstanceCatalogBloc workoutInstanceCatalogBloc =
+      WorkoutInstanceCatalogBloc(
+          rawWorkoutInstanceCatalogBloc: rawWorkoutInstanceCatalogBloc,
+          workoutTypeCatalogBloc: workoutTypeCatalogBloc,
+          exerciseTypeCatalogBloc: exerciseTypeCatalogBloc,
+      );
 
     return BlocProvider<ExerciseTypeCatalogBloc>(
       bloc: exerciseTypeCatalogBloc,
@@ -23,13 +32,19 @@ class MyApp extends StatelessWidget {
         bloc: rawWorkoutTypeCatalogBloc,
         child: BlocProvider<WorkoutTypeCatalogBloc>(
           bloc: workoutTypeCatalogBloc,
-          child: MaterialApp(
-            title: 'Workout tracker',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: MyHomePage('Workout tracker'),
-          ),
+          child: BlocProvider<RawWorkoutInstanceCatalogBloc>(
+            bloc: rawWorkoutInstanceCatalogBloc,
+            child: BlocProvider<WorkoutInstanceCatalogBloc>(
+              bloc: workoutInstanceCatalogBloc,
+              child: MaterialApp(
+                title: 'Workout tracker',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                home: MyHomePage('Workout tracker'),
+              ),
+            )
+          )
         ),
       )
     );
